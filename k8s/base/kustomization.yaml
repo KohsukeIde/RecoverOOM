@@ -1,0 +1,42 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: RecoverOOM
+
+commonLabels:
+  app: RecoverOOM-api
+
+resources:
+- namespace.yaml
+- deployment.yaml
+- sa.yaml
+- clusterrolebinding.yaml
+
+replicas:
+- name: RecoverOOM-api
+  count: 0
+
+configurations:
+- varreference.yaml
+
+configmapGenerator:
+- name: "RecoverOOM-setting"
+  namespace: RecoverOOM
+  literals:
+  - ENV=TO_BE_SPECIFIED
+  - DOMAIN=TO_BE_SPECIFIED
+
+vars:
+- name: ENV
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: "RecoverOOM-setting"
+  fieldref:
+    fieldpath: data.ENV
+- name: DOMAIN
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: "RecoverOOM-setting"
+  fieldref:
+    fieldpath: data.DOMAIN

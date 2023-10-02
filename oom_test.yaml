@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+   name: RecoverOOM-test-cron
+   namespace: RecoverOOM
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 60
+      template:
+        metadata:
+          labels:
+            purpose: demonstrate-oom
+        spec: 
+          restartPolicy: Never
+          containers:
+          - name: RecoverOOM-test
+            image: ubuntu
+            command:
+              - bash
+              - -c
+            args:
+              - |
+                echo PID=$$
+                for i in {0..9}
+                do
+                    eval a$i'=$(head --bytes 5000000 /dev/zero |cat -v)'
+                    echo $((i++));
+                done
+            resources:
+              requests:
+                memory: 25Mi
+                cpu: 1
+              limits:
+                memory: 25Mi
+                cpu: 1
+          tolerations:
+            - effect: NoSchedule
+              key: zeroScale
+              operator: Equal
+          nodeSelector:
+            node.kubernetes.io/instance-type: n1-highmem-2

@@ -1,0 +1,11 @@
+resources:
+- ../base
+configmapGenerator:
+- name: "RecoverOOM-setting"
+  namespace: RecoverOOM
+  behavior: replace
+  literals:
+  - ENV=dev
+replicas:
+  - name: RecoverOOM-api
+    count: 1

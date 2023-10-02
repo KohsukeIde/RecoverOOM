@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: RecoverOOM-api
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 0%
+    type: RollingUpdate
+  template:
+    spec:
+      serviceAccountName: RecoverOOM-api
+      containers:
+      - name: RecoverOOM-api
+        image: asia-northeast1-docker.pkg.dev/test-$(ENV)/RecoverOOM/api
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8080
+        lifecycle:
+          preStop:
+            exec:
+              command:
+                - "sleep"
+                - "10"
+        resources:
+          requests:
+            memory: 2Gi
+            cpu: 250m
+          limits:
+            memory: 2Gi
+            cpu: 500m
+        env:
+          - name: ENV
+            valueFrom:
+              configMapKeyRef:
+                name: RecoverOOM-setting
+                key: ENV
+          - name: PROJECT_ID
+            value: test-dev
+      # slow down rolling update than default 30s, must be longer than Goa's graceful shutdown (specified in cmd/jubba/http.go)
+      terminationGracePeriodSeconds: 35

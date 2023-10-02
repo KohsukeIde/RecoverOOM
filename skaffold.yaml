@@ -1,0 +1,20 @@
+apiVersion: skaffold/v4beta3
+kind: Config
+build:
+  artifacts:
+    - image: asia-northeast1-docker.pkg.dev/test/RecoverOOM/api
+      context: .
+      docker:
+        dockerfile: Dockerfile
+  platforms:
+    - linux/amd64
+  local:
+    useBuildkit: true
+manifests:
+  kustomize:
+    paths:
+      - k8s/dev
+    buildArgs:
+      - --stack-trace
+
+  
