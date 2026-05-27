@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 
-	"https://github.com/KohsukeIde/RecoverOOM"
+	RecoverOOM "github.com/KohsukeIde/RecoverOOM"
 
 	"cloud.google.com/go/pubsub"
 )

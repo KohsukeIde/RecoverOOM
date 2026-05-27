@@ -1,4 +1,4 @@
-module https://github.com/KohsukeIde/ai/RecoverOOM
+module github.com/KohsukeIde/RecoverOOM
 
 go 1.19
 

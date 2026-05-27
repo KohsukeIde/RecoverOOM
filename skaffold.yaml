@@ -2,7 +2,7 @@ apiVersion: skaffold/v4beta3
 kind: Config
 build:
   artifacts:
-    - image: asia-northeast1-docker.pkg.dev/test/RecoverOOM/api
+    - image: asia-northeast1-docker.pkg.dev/test/recoveroom/api
       context: .
       docker:
         dockerfile: Dockerfile

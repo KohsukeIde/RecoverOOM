@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: RecoverOOM-api
+  name: recoveroom-api
 spec:
   strategy:
     rollingUpdate:
@@ -10,10 +10,10 @@ spec:
     type: RollingUpdate
   template:
     spec:
-      serviceAccountName: RecoverOOM-api
+      serviceAccountName: recoveroom-api
       containers:
-      - name: RecoverOOM-api
-        image: asia-northeast1-docker.pkg.dev/test-$(ENV)/RecoverOOM/api
+      - name: recoveroom-api
+        image: asia-northeast1-docker.pkg.dev/test-$(ENV)/recoveroom/api
         imagePullPolicy: Always
         ports:
           - containerPort: 8080
@@ -34,7 +34,7 @@ spec:
           - name: ENV
             valueFrom:
               configMapKeyRef:
-                name: RecoverOOM-setting
+                name: recoveroom-setting
                 key: ENV
           - name: PROJECT_ID
             value: test-dev

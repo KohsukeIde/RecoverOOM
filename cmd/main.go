@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	RecoverOOM "https://github.com/KohsukeIde/RecoverOOM"
+	RecoverOOM "github.com/KohsukeIde/RecoverOOM"
 )
 
 func main() {

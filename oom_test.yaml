@@ -1,8 +1,8 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-   name: RecoverOOM-test-cron
-   namespace: RecoverOOM
+   name: recoveroom-test-cron
+   namespace: recoveroom
 spec:
   schedule: "*/1 * * * *"
   jobTemplate:
@@ -15,7 +15,7 @@ spec:
         spec: 
           restartPolicy: Never
           containers:
-          - name: RecoverOOM-test
+          - name: recoveroom-test
             image: ubuntu
             command:
               - bash
